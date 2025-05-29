@@ -4,5 +4,8 @@ public  class Main {
 
     public static void main(String[]  args){
         Task.task1();
-    }
+        Task.task2();
+
+
+}
 }

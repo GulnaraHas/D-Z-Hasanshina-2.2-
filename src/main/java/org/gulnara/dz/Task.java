@@ -2,9 +2,20 @@ package org.gulnara.dz;
 
 public class Task {
     public static void task1() {
-        System.out.println("----- Task 1 ------");
+        System.out.println("----- Задача 1 ------");
         System.out.println("Orange");
         System.out.println("Banana");
         System.out.println("Apple");
     }
-}
+    public static void task2() {
+        int a = 7;
+        int b = -5;
+        int sum = a + b;
+        if (sum >= 0) {
+            System.out.println("----- Задача 2 ------");
+            System.out.println("Сумма положительная");
+        }
+        else
+            System.out.println("Сумма отрицательная");
+        }
+    }
