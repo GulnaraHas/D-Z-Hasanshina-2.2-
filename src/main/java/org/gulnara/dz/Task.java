@@ -1,5 +1,4 @@
 package org.gulnara.dz;
-
 public class Task {
     public static void task1() {
         System.out.println("----- Задача 1 ------");
@@ -7,6 +6,7 @@ public class Task {
         System.out.println("Banana");
         System.out.println("Apple");
     }
+
     public static void task2() {
         int a = 7;
         int b = -5;
@@ -14,8 +14,23 @@ public class Task {
         if (sum >= 0) {
             System.out.println("----- Задача 2 ------");
             System.out.println("Сумма положительная");
-        }
-        else
+        } else
             System.out.println("Сумма отрицательная");
-        }
     }
+
+    public static void task3() {
+        int value = 35;
+        if (value <= 0) {
+            System.out.println("----- Задача 3 ------");
+            System.out.println("Красный");
+        } else if (value > 0 && value <= 100) {
+            System.out.println("----- Задача 3 ------");
+            System.out.println("Желтый");
+        } else {
+
+            System.out.println("Зеленый");
+        }
+         }
+}
+
+
