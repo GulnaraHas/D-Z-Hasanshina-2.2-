@@ -30,7 +30,8 @@ public class Task {
 
             System.out.println("Зеленый");
         }
-         }
+    }
+
     public static void task4() {
         int a = 62;
         int b = 4;
@@ -43,5 +44,6 @@ public class Task {
         }
     }
 }
+
 
 
