@@ -6,6 +6,7 @@ public  class Main {
         Task.task1();
         Task.task2();
         Task.task3();
+        Task.task4();
 
 
 

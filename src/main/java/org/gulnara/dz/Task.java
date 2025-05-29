@@ -31,6 +31,17 @@ public class Task {
             System.out.println("Зеленый");
         }
          }
+    public static void task4() {
+        int a = 62;
+        int b = 4;
+        if (a >= b) {
+            System.out.println("----- Задача 4 ------");
+            System.out.println("a >= b");
+        } else {
+            System.out.println("----- Задача 4 ------");
+            System.out.println("a < b");
+        }
+    }
 }
 
 
