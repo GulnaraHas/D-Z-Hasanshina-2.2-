@@ -43,7 +43,41 @@ public class Task {
             System.out.println("a < b");
         }
     }
+
+    public static boolean task5() {
+        int a = 7;
+        int b = -5;
+        int sum = a + b;
+        System.out.println ("----- Задача 5 ------");
+        return sum >= 10 && sum <= 20;
+    }
+
+    public static void task6(int number) {
+        if (number >= 0) {
+            System.out.println("----- Задача 6 ------");
+            System.out.println("Число положительное");
+        } else {
+            System.out.println("----- Задача 6 ------");
+            System.out.println("Число отрицательное");
+        }
+    }
+    /*Напишите метод, которому в качестве параметра передается целое число. Метод должен вернуть true, если число отрицательное, и вернуть false если положительное.
+    Замечание: ноль считаем положительным числом.*/
+    public static boolean task7 (int number) {
+        System.out.println("----- Задача 7 ------");
+        return number < 0;
+
+    }
+    /*Напишите метод, которому в качестве аргументов передается строка и число, метод должен отпечатать в консоль указанную строку, указанное количество раз*/
+    public static void task8 (String str, int times) {
+        for (int i = 0; i < times; i++) {
+            System.out.println("----- Задача 8 ------");
+            System.out.println(str);
+        }
+    }
+
 }
+
 
 
 
