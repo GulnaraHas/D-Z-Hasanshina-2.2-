@@ -66,7 +66,6 @@ public class Task {
     public static boolean task7 (int number) {
         System.out.println("----- Задача 7 ------");
         return number < 0;
-
     }
     /*Напишите метод, которому в качестве аргументов передается строка и число, метод должен отпечатать в консоль указанную строку, указанное количество раз*/
     public static void task8 (String str, int times) {
@@ -75,7 +74,6 @@ public class Task {
             System.out.println(str);
         }
     }
-
 }
 
 
