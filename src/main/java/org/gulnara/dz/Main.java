@@ -1,8 +1,20 @@
 package org.gulnara.dz;
 
-public  class Main {
+import java.time.LocalDate;
 
-    public static void main(String[]  args){
-        System.out.println("dz");
+class Main {
+
+    public static void main(String[] args) {
+        // Создаем объект товара
+        Product product = new Product(
+                "Смартфон XYZ",
+                LocalDate.of(2023, 10, 15),
+                "TechCorp",
+                "Китай",
+                59999.99,
+                true
+        );
+
+               product.printProductInfo();
     }
 }
