@@ -1,5 +1,6 @@
 package org.gulnara.dz;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Product {
     private String name;                // Название товара
@@ -10,10 +11,12 @@ public class Product {
     private boolean isReserved;         // Состояние бронирования покупателем
 
     // Конструктор класса
-    public Product(String name, LocalDate productionDate, String manufacturer,
+    public Product(String name, String productionDate, String manufacturer,
                    String countryOfOrigin, double price, boolean isReserved) {
         this.name = name;
-        this.productionDate = productionDate;
+        // Парсим строку с датой в формате "dd.MM.yyyy" в LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        this.productionDate = LocalDate.parse(productionDate, formatter);
         this.manufacturer = manufacturer;
         this.countryOfOrigin = countryOfOrigin;
         this.price = price;
@@ -22,7 +25,7 @@ public class Product {
 
     // Метод для вывода информации о товаре в консоль
     public void printProductInfo() {
-        System.out.println("Название: " + name);
+        System.out.println("Название: " + this.name);
         System.out.println("Дата производства: " + productionDate);
         System.out.println("Производитель: " + manufacturer);
         System.out.println("Страна происхождения: " + countryOfOrigin);
