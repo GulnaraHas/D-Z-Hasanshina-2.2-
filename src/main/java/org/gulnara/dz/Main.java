@@ -1,7 +1,52 @@
 package org.gulnara.dz;
 public class Main {
+    public static int processArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+        // Проверка размера массива
+        if (array.length != 4) {
+            throw new MyArraySizeException("Массив должен быть 4x4. Получено строк: " + array.length);
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null || array[i].length != 4) {
+                throw new MyArraySizeException(
+                        String.format("Строка %d должна содержать 4 элемента. Получено: %s",
+                                i, array[i] == null ? "null" : array[i].length)
+                );
+            }
+        }
+
+        // Суммирование элементов
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(array[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException(
+                            String.format("Неверные данные в ячейке [%d][%d]: '%s'",
+                                    i, j, array[i][j])
+                    );
+                }
+            }
+        }
+        return sum;
+    }
+
+    // Метод для демонстрации ArrayIndexOutOfBoundsException
+    public static void demonstrateArrayIndexException() {
+        int[][] matrix = {{1, 2}, {3, 4}};
+        try {
+            System.out.println("Попытка доступа к matrix[2][0]...");
+            int value = matrix[2][0]; // Здесь возникнет исключение
+            System.out.println("Значение: " + value);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Поймано ArrayIndexOutOfBoundsException: " + e.getMessage());
+            System.out.println("Максимально допустимый индекс строки: " + (matrix.length - 1));
+        }
+    }
+
     public static void main(String[] args) {
-        // Примеры массивов
+        // Тестовые данные
         String[][] correctArray = {
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
@@ -19,53 +64,28 @@ public class Main {
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
                 {"9", "10", "11", "12"},
-                {"13", "14", "15", "abc"}
+                {"13", "14", "15", "X"}
         };
 
-        try {
-            System.out.println("Сумма correctArray: " + sumArrayElements(correctArray));
-            System.out.println("Сумма wrongSizeArray: " + sumArrayElements(wrongSizeArray)); // MyArraySizeException
-        } catch (MyArraySizeException | MyArrayDataException e) {
-            System.err.println(e.getMessage());
-        }
+        // Обработка массивов
+        processAndPrint(correctArray, "Корректный массив");
+        processAndPrint(wrongSizeArray, "Массив неправильного размера");
+        processAndPrint(wrongDataArray, "Массив с некорректными данными");
 
-        try {
-            System.out.println("Сумма wrongDataArray: " + sumArrayElements(wrongDataArray)); // MyArrayDataException
-        } catch (MyArraySizeException | MyArrayDataException e) {
-            System.err.println(e.getMessage());
-        }
+        // Демонстрация ArrayIndexOutOfBoundsException
+        System.out.println("\nДемонстрация ArrayIndexOutOfBoundsException:");
+        demonstrateArrayIndexException();
     }
 
-    public static int sumArrayElements(String[][] array) throws MyArraySizeException, MyArrayDataException {
-        // Проверка размера массива
-        if (array.length != 4) {
-            throw new MyArraySizeException("Ошибка размера: массив должен быть 4x4, но количество строк: " + array.length);
+    private static void processAndPrint(String[][] array, String description) {
+        System.out.println("\nОбработка: " + description);
+        try {
+            int sum = processArray(array);
+            System.out.println("Сумма элементов: " + sum);
+        } catch (MyArraySizeException e) {
+            System.out.println("Ошибка размера массива: " + e.getMessage());
+        } catch (MyArrayDataException e) {
+            System.out.println("Ошибка данных в массиве: " + e.getMessage());
         }
-
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null || array[i].length != 4) {
-                throw new MyArraySizeException(
-                        "Ошибка размера: строка " + i + " имеет длину " +
-                                (array[i] == null ? "null" : array[i].length) + " вместо 4"
-                );
-            }
-        }
-
-        // Суммирование элементов
-        int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                try {
-                    sum += Integer.parseInt(array[i][j]);
-                } catch (NumberFormatException e) {
-                    throw new MyArrayDataException(
-                            "Ошибка данных в ячейке [" + i + "][" + j + "]: '" +
-                                    array[i][j] + "' не является целым числом"
-                    );
-                }
-            }
-        }
-
-        return sum;
     }
 }
