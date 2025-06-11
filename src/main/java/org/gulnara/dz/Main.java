@@ -1,41 +1,94 @@
 package org.gulnara.dz;
-import java.util.*;
-
 public class Main {
         public static void main(String[] args) {
-        Set<Student> students = new HashSet<>();
+                // Пример корректного массива
+                String[][] correctArray = {
+                        {"1", "2", "3", "4"},
+                        {"5", "6", "7", "8"},
+                        {"9", "10", "11", "12"},
+                        {"13", "14", "15", "16"}
+                };
 
-        // Создаем студентов с оценками
-        Map<String, Integer> grades1 = new HashMap<>();
-        grades1.put("Math", 4);
-        grades1.put("Physics", 5);
-        students.add(new Student("Alice", "Group A", 1, grades1));
+                // Пример массива с некорректными данными
+                String[][] incorrectDataArray = {
+                        {"1", "2", "3", "4"},
+                        {"5", "6", "7", "8"},
+                        {"9", "10", "11", "12"},
+                        {"13", "14", "15", "abc"}
+                };
 
-        Map<String, Integer> grades2 = new HashMap<>();
-        grades2.put("Math", 2);
-        grades2.put("Physics", 3);
-        students.add(new Student("Bob", "Group B", 2, grades2));
+                // Пример массива неправильного размера
+                String[][] incorrectSizeArray = {
+                        {"1", "2", "3"},
+                        {"4", "5", "6"},
+                        {"7", "8", "9"}
+                };
 
-        Map<String, Integer> grades3 = new HashMap<>();
-        grades3.put("Math", 5);
-        grades3.put("Physics", 5);
-        students.add(new Student("Charlie", "Group A", 1, grades3));
+                try {
+                        // Тестируем корректный массив
+                        System.out.println("Сумма корректного массива: " + sumArray(correctArray));
 
-        System.out.println("All students:");
-        students.forEach(System.out::println);
+                        // Тестируем массив с некорректными данными
+                        try {
+                                System.out.println("Сумма массива с ошибкой в данных: " + sumArray(incorrectDataArray));
+                        } catch (MyArrayDataException e) {
+                                System.out.println(e.getMessage());
+                        }
 
-        // Удаляем студентов со средним баллом < 3
-        Student.removeUnderperformingStudents(students);
-        System.out.println("\nAfter removing underperforming students:");
-        students.forEach(System.out::println);
+                        // Тестируем массив неправильного размера
+                        try {
+                                System.out.println("Сумма массива неправильного размера: " + sumArray(incorrectSizeArray));
+                        } catch (MyArraySizeException e) {
+                                System.out.println(e.getMessage());
+                        }
 
-        // Переводим студентов на следующий курс
-        Student.promoteStudents(students);
-        System.out.println("\nAfter promoting students:");
-        students.forEach(System.out::println);
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
 
-        // Печатаем студентов определенного курса
-        System.out.println();
-        Student.printStudents(students, 2);
-    }
+                // Демонстрация ArrayIndexOutOfBoundsException
+                try {
+                        generateArrayIndexOutOfBounds();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("\nПоймано ArrayIndexOutOfBoundsException: " + e.getMessage());
+                }
+        }
+
+        public static int sumArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+                // Проверка размера массива
+                if (array.length != 4) {
+                        throw new MyArraySizeException("Массив должен быть размером 4x4");
+                }
+                for (String[] row : array) {
+                        if (row.length != 4) {
+                                throw new MyArraySizeException("Массив должен быть размером 4x4");
+                        }
+                }
+
+                int sum = 0;
+
+                // Перебор элементов массива
+                for (int i = 0; i < array.length; i++) {
+                        for (int j = 0; j < array[i].length; j++) {
+                                try {
+                                        sum += Integer.parseInt(array[i][j]);
+                                } catch (NumberFormatException e) {
+                                        throw new MyArrayDataException(
+                                                String.format("Некорректные данные в ячейке [%d][%d]: '%s'", i, j, array[i][j])
+                                        );
+                                }
+                        }
+                }
+
+                return sum;
+        }
+
+        // Метод для генерации ArrayIndexOutOfBoundsException
+        public static void generateArrayIndexOutOfBounds() {
+                int[] smallArray = new int[3];
+
+                // Попытка доступа к несуществующему индексу
+                System.out.println("\nПопытка доступа к 10-му элементу массива длиной 3:");
+                int value = smallArray[10]; // Здесь возникнет исключение
+        }
 }
