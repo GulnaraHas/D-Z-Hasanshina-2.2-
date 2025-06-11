@@ -1,91 +1,41 @@
 package org.gulnara.dz;
+import java.util.*;
+
 public class Main {
-    public static int processArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
-        // Проверка размера массива
-        if (array.length != 4) {
-            throw new MyArraySizeException("Массив должен быть 4x4. Получено строк: " + array.length);
-        }
+        public static void main(String[] args) {
+        Set<Student> students = new HashSet<>();
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null || array[i].length != 4) {
-                throw new MyArraySizeException(
-                        String.format("Строка %d должна содержать 4 элемента. Получено: %s",
-                                i, array[i] == null ? "null" : array[i].length)
-                );
-            }
-        }
+        // Создаем студентов с оценками
+        Map<String, Integer> grades1 = new HashMap<>();
+        grades1.put("Math", 4);
+        grades1.put("Physics", 5);
+        students.add(new Student("Alice", "Group A", 1, grades1));
 
-        // Суммирование элементов
-        int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                try {
-                    sum += Integer.parseInt(array[i][j]);
-                } catch (NumberFormatException e) {
-                    throw new MyArrayDataException(
-                            String.format("Неверные данные в ячейке [%d][%d]: '%s'",
-                                    i, j, array[i][j])
-                    );
-                }
-            }
-        }
-        return sum;
-    }
+        Map<String, Integer> grades2 = new HashMap<>();
+        grades2.put("Math", 2);
+        grades2.put("Physics", 3);
+        students.add(new Student("Bob", "Group B", 2, grades2));
 
-    // Метод для демонстрации ArrayIndexOutOfBoundsException
-    public static void demonstrateArrayIndexException() {
-        int[][] matrix = {{1, 2}, {3, 4}};
-        try {
-            System.out.println("Попытка доступа к matrix[2][0]...");
-            int value = matrix[2][0]; // Здесь возникнет исключение
-            System.out.println("Значение: " + value);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Поймано ArrayIndexOutOfBoundsException: " + e.getMessage());
-            System.out.println("Максимально допустимый индекс строки: " + (matrix.length - 1));
-        }
-    }
+        Map<String, Integer> grades3 = new HashMap<>();
+        grades3.put("Math", 5);
+        grades3.put("Physics", 5);
+        students.add(new Student("Charlie", "Group A", 1, grades3));
 
-    public static void main(String[] args) {
-        // Тестовые данные
-        String[][] correctArray = {
-                {"1", "2", "3", "4"},
-                {"5", "6", "7", "8"},
-                {"9", "10", "11", "12"},
-                {"13", "14", "15", "16"}
-        };
+        System.out.println("All students:");
+        students.forEach(System.out::println);
 
-        String[][] wrongSizeArray = {
-                {"1", "2", "3"},
-                {"4", "5", "6"},
-                {"7", "8", "9"}
-        };
+        // Удаляем студентов со средним баллом < 3
+        Student.removeUnderperformingStudents(students);
+        System.out.println("\nAfter removing underperforming students:");
+        students.forEach(System.out::println);
 
-        String[][] wrongDataArray = {
-                {"1", "2", "3", "4"},
-                {"5", "6", "7", "8"},
-                {"9", "10", "11", "12"},
-                {"13", "14", "15", "X"}
-        };
+        // Переводим студентов на следующий курс
+        Student.promoteStudents(students);
+        System.out.println("\nAfter promoting students:");
+        students.forEach(System.out::println);
 
-        // Обработка массивов
-        processAndPrint(correctArray, "Корректный массив");
-        processAndPrint(wrongSizeArray, "Массив неправильного размера");
-        processAndPrint(wrongDataArray, "Массив с некорректными данными");
-
-        // Демонстрация ArrayIndexOutOfBoundsException
-        System.out.println("\nДемонстрация ArrayIndexOutOfBoundsException:");
-        demonstrateArrayIndexException();
-    }
-
-    private static void processAndPrint(String[][] array, String description) {
-        System.out.println("\nОбработка: " + description);
-        try {
-            int sum = processArray(array);
-            System.out.println("Сумма элементов: " + sum);
-        } catch (MyArraySizeException e) {
-            System.out.println("Ошибка размера массива: " + e.getMessage());
-        } catch (MyArrayDataException e) {
-            System.out.println("Ошибка данных в массиве: " + e.getMessage());
-        }
+        // Печатаем студентов определенного курса
+        System.out.println();
+        Student.printStudents(students, 2);
     }
 }
